@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "webpack": "^5.47.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-server": "^0.1.2"
+  },
+  "dependencies": {
+    "single-spa": "^5.9.3",
+    "single-spa-vue": "^2.4.2"
+  }
+}
