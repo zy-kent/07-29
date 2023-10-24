@@ -23,24 +23,6 @@ public static void main(String[]args){
         }
         return res;
     }
-    // 非递减数列
-    // 给你一个长度为 n 的整数数组，请你判断在 最多 改变 1 个元素的情况下，该数组能否变成一个非递减数列
-    public boolean checkPossibility(int[] nums) {
-        int n = nums.length, cnt = 0;
-        for (int i = 0; i < n - 1; ++i) {
-            int x = nums[i], y = nums[i + 1];
-            if (x > y) {
-                cnt++;
-                if (cnt > 1) {
-                    return false;
-                }
-                if (i > 0 && y < nums[i - 1]) {
-                    nums[i + 1] = x;
-                }
-            }
-        }
-        return true;
-    }
     // 移动零
     // 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序
     public void moveZeroes(int[] nums) {
@@ -115,5 +97,49 @@ public static void main(String[]args){
             res = Math.max(res, f);
         }
         return res;
+    }
+    // 给你一个字符串数组，请你将 字母异位词 组合在一起。可以按任意顺序返回结果列表。
+    // 字母异位词 是由重新排列源单词的所有字母得到的一个新单词
+    // strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
+    // 输出: [["bat"],["nat","tan"],["ate","eat","tea"]]
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<String, List<String>>();
+        for (String str : strs) {
+            char[] array = str.toCharArray();
+            Arrays.sort(array);
+            String key = new String(array);
+            List<String> list = map.getOrDefault(key, new ArrayList<String>());
+            list.add(str);
+            map.put(key, list);
+        }
+        return new ArrayList<List<String>>(map.values());
+    }
+    // 给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度
+    // 输入：nums = [100,4,200,1,3,2]
+    // 输出：4
+    //解释：最长数字连续序列是 [1, 2, 3, 4]。它的长度为 4。
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> num_set = new HashSet<Integer>();
+        for (int num : nums) {
+            num_set.add(num);
+        }
+
+        int longestStreak = 0;
+
+        for (int num : num_set) {
+            if (!num_set.contains(num - 1)) {
+                int currentNum = num;
+                int currentStreak = 1;
+
+                while (num_set.contains(currentNum + 1)) {
+                    currentNum += 1;
+                    currentStreak += 1;
+                }
+
+                longestStreak = Math.max(longestStreak, currentStreak);
+            }
+        }
+
+        return longestStreak;
     }
 }
